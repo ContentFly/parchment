@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni" crossorigin="anonymous">
+
+  <script src='https://cdn.tiny.cloud/1/diu9s14r7g6nub8i4dedvogd0qc4vnj7aa14bxqd85vzhhav/tinymce/5/tinymce.min.js' referrerpolicy="origin"></script>
+
+      <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+
+<script>
+tinymce.init({
+  selector: "textarea#editor",
+  height: 850,
+  plugins: "autoresize, fullpage, lists, link, image, media, export",
+  toolbar_sticky: true,
+  toolbar:
+    "h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | link image media | removeformat help | export",
+  menubar: false,
+  formats: {
+    alignleft: {selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes : 'left'},
+    aligncenter: {selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes : 'center'},
+    alignright: {selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes : 'right'},
+    alignjustify: {selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes : 'full'},
+    bold: {inline : 'span', 'classes' : 'bold'},
+    italic: {inline : 'span', 'classes' : 'italic'},
+    underline: {inline : 'span', 'classes' : 'underline', exact : true},
+    strikethrough: {inline : 'del'},
+    forecolor: {inline : 'span', classes : 'forecolor', styles : {color : 'black'}},
+    hilitecolor: {inline : 'span', classes : 'hilitecolor', styles : {backgroundColor : 'black'}},
+    custom_format: {block : 'h1', attributes : {title : 'Header'}, styles : {color : 'red'}}
+  },
+  setup: function(editor) {
+    editor.on('init', function(e) {
+      console.log('The Editor has initialized.');
+    	if(tinymce.activeEditor.getContent({format: 'text'}) == ""){
+tinyMCE.activeEditor.setContent('<b>What Is Content Amplification and How to Use It to Reach More People?</b><br/><br/>Content amplification is a set of strategies to get your content in front of more people through earned, owned and paid media. It is, essentially, a fancy word for "content promotion". But in an era where');
+}
+    });
+  }
+});
+
+</script>
+
+<style>
+
+
+.sidebar {
+	background-color: rgb(18, 124, 231);
+	color: white;
+}
+
+html, body, .container-fluid, .row
+{
+    height: 100%;
+    color: rgb(49, 54, 73) !important;
+    	font-family: 'avenir';
+
+}
+
+.container-fluid {
+	padding: 0;
+	overflow-x: hidden;
+}
+
+.col {
+	padding: 0px;
+	margin: 0px;
+}
+
+.tox-toolbar__primary, .tox {
+	border: none !important;
+	background: none !important;
+}
+
+.tox {
+	background-color: rgba(255,255,255,0.1);
+}
+.mceContentBody{
+         overflow:hidden!important;
+      }
+
+</style>
+
+    <title>Hello, world!</title>
+  </head>
+
+  <body>
+    {{{body}}}
+
+    <script>
+
+
+
+    $("#generate").click(() => {
+    	tinymce.activeEditor.setProgressState(true);
+        console.log('Finished article: ')
+
+        content = tinymce.activeEditor.getContent({format: 'text'});
+
+        // move cursor to end
+        tinyMCE.activeEditor.selection.select(tinyMCE.activeEditor.getBody(), true);
+		tinyMCE.activeEditor.selection.collapse(false);
+
+        console.log(content)
+
+        $.post('/generate', { prompt: content, len: $("#inputGroupSelect04").val() },
+            function(returnedData) {
+                console.log(returnedData);
+
+
+
+
+// 	reset loader and insert content
+                tinymce.activeEditor.insertContent(returnedData.replace(/(?:\r\n|\r|\n)/g, '<br>'));
+                tinymce.activeEditor.setProgressState(false);
+
+
+
+
+
+                // Contractions
+                var editor = tinymce.activeEditor
+var content = editor.getContent();
+content = content.replace(/you are/g, "you're");
+content = content.replace(/are not/g, "aren't");
+content = content.replace(/you will/g, "you'll");
+content = content.replace(/You are/g, "You're");
+content = content.replace(/You will/g, "You'll");
+content = content.replace(/It is/g, "It's");
+content = content.replace(/it is/g, "it's");
+content = content.replace(/I have/g, "I've");
+content = content.replace(/i have/g, "i've");
+content = content.replace(/You have/g, "You've");
+content = content.replace(/you have/g, "you've");
+editor.setContent(content);
+
+                // scroll to bottom
+                var scrollingElement = (document.scrollingElement || document.body);
+scrollingElement.scrollTop = scrollingElement.scrollHeight;
+             //    editor.blocks.insert("paragraph",{
+	            //     "text" : returnedData
+	            // })
+
+            });
+    })
+    </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>  </body>
+</html>
